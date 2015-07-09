@@ -22,8 +22,10 @@ public class ItemFragment extends Fragment implements Tools.IRequestData<List<Wo
 
     public static final int FULI = 0;
     public static final int DOMGMAN = 1;
+    public static final int IT_HOME = 2;
 
     public static final String TYPE = "type";
+
     private List<Word> mData;
 
     private MAdapter mAdapter;
@@ -84,6 +86,10 @@ public class ItemFragment extends Fragment implements Tools.IRequestData<List<Wo
                 break;
             case 1:
                 Tools.request178Word(this, page);
+                break;
+            case 2:
+                Tools.requestIthome(this, page);
+                break;
         }
 
     }

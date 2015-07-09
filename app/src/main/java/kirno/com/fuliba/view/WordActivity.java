@@ -45,6 +45,8 @@ public class WordActivity extends Activity implements Tools.IRequestData<WorldCo
             case ItemFragment.DOMGMAN:
                 Tools.request178(this, mWord.getLink());
                 break;
+            case ItemFragment.IT_HOME:
+                Tools.requestIthomeWord(this, mWord.getLink());
         }
 
     }

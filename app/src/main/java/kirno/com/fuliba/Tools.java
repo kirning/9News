@@ -16,6 +16,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import kirno.com.fuliba.view.ItemFragment;
+
 /**
  * Created by kirno on 2015/7/1.
  */
@@ -32,6 +34,76 @@ public class Tools {
         if (!TextUtils.isEmpty(text)) {
             textView.setText(text);
         }
+    }
+
+    public static void requestIthomeWord(final IRequestData<WorldCotnext> requestData,String url) {
+        new MAsyncTask<>(requestData, new MAsyncTask.IHandlerHtml<WorldCotnext>() {
+            @Override
+            public WorldCotnext getData(Document document) {
+                WorldCotnext worldCotnext = new WorldCotnext();
+
+                String html = document.getElementById("paragraph").html();
+                worldCotnext.setHtml(html);
+                return worldCotnext;
+            }
+        }).execute(url);
+
+    }
+
+    public static void requestIthome(final IRequestData<List<Word>> requestData, int page) {
+        String url;
+        if (page == 1) {
+            url = "http://win10.ithome.com/";
+        }else {
+            url = "http://win10.ithome.com/category/21_" + page + ".html";
+        }
+
+        new MAsyncTask<>(requestData, new MAsyncTask.IHandlerHtml<List<Word>>() {
+            @Override
+            public List<Word> getData(Document document) {
+
+                Elements elementsByClass = document.getElementsByClass("content");
+                Element contentFl = elementsByClass.get(0);
+
+                Elements cate_list = contentFl.getElementsByClass("cate_list");
+                Element cateList = cate_list.get(0);
+                Elements liLIst = cateList.getElementsByTag("li");
+                ArrayList<Word> wordData = new ArrayList<>(liLIst.size() - 1);
+
+                for (int i = 1; i < liLIst.size(); i++) {
+                    try {
+                        Word word = new Word();
+
+                        Element item = liLIst.get(i);
+
+                        Elements font = item.getElementsByTag("font");
+                        String title = font.get(0).text();
+                        word.setTitle(title);
+
+                        Elements span = item.getElementsByTag("span");
+                        String date = span.get(0).text();
+                        word.setType(date);
+
+                        Elements p = item.getElementsByTag("p");
+                        String content = p.get(0).text();
+                        word.setContext(content);
+
+                        Elements img = item.getElementsByTag("img");
+                        String imgUrl = img.get(0).attr("data-original");
+                        word.setPicUrl(imgUrl);
+
+                        String link = item.getElementsByTag("a").get(0).attr("href");
+                        word.setLink(link);
+
+                        wordData.add(word);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                return wordData;
+            }
+        }).execute(url);
     }
 
 
