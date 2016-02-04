@@ -36,6 +36,7 @@ public class MAsyncTask<T> extends AsyncTask<String, Void, T> {
         String url = params[0];
         Document document = null;
         try {
+
             document = Jsoup.connect(url)
                     .userAgent("Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36")
                     .get();

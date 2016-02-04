@@ -111,6 +111,7 @@ public class Tools {
         void obtainData(T list);
     }
 
+    //178
     public static void request178Word(final IRequestData<List<Word>> requestData, final int page) {
         String url;
         if (page == 1) {
@@ -182,7 +183,7 @@ public class Tools {
 
     }
 
-
+    //福利吧
     public static void requestWord(final IRequestData<WorldCotnext> requestWord, String url) {
 
 
@@ -242,7 +243,7 @@ public class Tools {
                     }
                 }
                 try {
-                    Document document = Jsoup.connect("http://fuliba.asia" + page)
+                    Document document = Jsoup.connect("http://fuliba.net/" + page)
                             .userAgent("Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36")
                             .get();
                     Element content = document.getElementById("content");
